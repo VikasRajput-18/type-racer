@@ -4,6 +4,7 @@ const { Server } = require("socket.io");
 const connectToDB = require("./db/connectDB");
 const Quotable = require("./api/Quotable");
 const GameModel = require("./models/game.model");
+const path = require("path");
 require("dotenv").config();
 
 const corsOptions = {
@@ -14,6 +15,8 @@ const corsOptions = {
 
 const app = express();
 const server = http.createServer(app);
+
+app.use(express.static(path.join(__dirname, "../../client/dist")));
 
 const io = new Server(server, { cors: corsOptions });
 
@@ -153,7 +156,9 @@ io.on("connect", (socket) => {
       game.players = game.players.filter((p) => p.socketId !== playerId);
       game = await game.save();
       io.to(gameId).emit("updateGame", game);
-      io.to(playerId).emit("elimination-success", { message: "You have been eliminated" })
+      io.to(playerId).emit("elimination-success", {
+        message: "You have been eliminated",
+      });
     } catch (error) {
       socket.emit("join-game-error", { error: "Internal server error" });
     }
