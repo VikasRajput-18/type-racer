@@ -8,7 +8,7 @@ const path = require("path");
 require("dotenv").config();
 
 const corsOptions = {
-  origin: "http://localhost:5173", // Update with your frontend URL
+  origin: ["http://localhost:5173", "http://localhost:8000"], // Update with your frontend URL
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
