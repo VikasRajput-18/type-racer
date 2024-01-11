@@ -13,8 +13,6 @@ const Form = ({ isOpen, isOver, gameId }) => {
     }
   }, [isOpen]);
 
-  
-
   const handleChange = (e) => {
     let { value } = e.target;
     let lastChar = value.charAt(value.length - 1);
@@ -39,6 +37,11 @@ const Form = ({ isOpen, isOver, gameId }) => {
           ref={textInputRef}
           className="border disabled:bg-gray-100  border-slate-300 rounded-md shadow-xl w-full p-2 resize-none mt-4"
         />
+        <p className="mt-2 mb-4 text-xs text-gray-600">
+          <b>Note: </b>
+          To go to the next word, enter the current word correctly and press the{" "}
+          <kbd className="bg-slate-200 px-2">Space</kbd> key.
+        </p>
       </form>
       <div></div>
     </div>
