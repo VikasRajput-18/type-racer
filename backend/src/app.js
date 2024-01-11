@@ -15,14 +15,13 @@ const corsOptions = {
 
 const app = express();
 const server = http.createServer(app);
+const io = new Server(server, { cors: corsOptions });
 
 app.use(express.static(path.join(__dirname, "../../client/dist")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
-// });
-
-const io = new Server(server, { cors: corsOptions });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
 
 let PORT = process.env.PORT || 8000;
 

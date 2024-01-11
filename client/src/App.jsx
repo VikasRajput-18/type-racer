@@ -34,6 +34,10 @@ const App = () => {
       });
       navigate("/");
     });
+
+    socket.on("connect_error", (error) => {
+      console.error("WebSocket connection error:", error);
+    });
   }, []);
 
   useEffect(() => {
