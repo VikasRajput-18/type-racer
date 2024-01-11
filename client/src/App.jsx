@@ -1,4 +1,4 @@
-import { useNavigate, Routes, Route } from "react-router-dom";
+import { useNavigate, Routes, Route, Navigate } from "react-router-dom";
 import GameMenu from "./GameMenu";
 
 import { useEffect, useState } from "react";
@@ -77,6 +77,7 @@ const App = () => {
             </Layout>
           }
         />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );

@@ -2,7 +2,7 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const connectToDB = require("./db/connectDB");
-const Quotable = require("./api/Quotable");
+const paragraphs = require("./api/Quotable");
 const GameModel = require("./models/game.model");
 const path = require("path");
 require("dotenv").config();
@@ -17,6 +17,10 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(express.static(path.join(__dirname, "../../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
 
 const io = new Server(server, { cors: corsOptions });
 
@@ -59,7 +63,13 @@ io.on("connect", (socket) => {
 
   socket.on("create-game", async (nickName) => {
     try {
-      let quote = await Quotable();
+      let randomNumber = Math.floor(Math.random() * paragraphs?.length);
+      paragraphs[randomNumber].split(" ");
+      let quote = paragraphs[randomNumber].split(" ");
+      if (quote?.length <= 0) {
+        socket.emit("join-game-error", { error: "Something went wrong" });
+        return;
+      }
       let game = new GameModel();
       game.words = quote;
       let player = {
@@ -84,6 +94,10 @@ io.on("connect", (socket) => {
 
       if (!game) {
         socket.emit("join-game-error", { error: "Game not found" });
+        return;
+      }
+      if (game?.players.length > 3) {
+        socket.emit("join-game-error", { error: "Slot full" });
         return;
       }
 

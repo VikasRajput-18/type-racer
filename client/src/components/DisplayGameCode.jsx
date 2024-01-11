@@ -16,11 +16,13 @@ const DisplayGameCode = ({ gameId, isOpen, isOver }) => {
   };
 
   return isOver && !isOpen ? (
-    <Button
-      text={"Start Again"}
-      onClick={() => navigate("/")}
-      customStyles={`max-w-md`}
-    />
+    <div className="flex items-center justify-center my-3">
+      <Button
+        text={"Start Again"}
+        onClick={() => navigate("/")}
+        customStyles={`max-w-md`}
+      />
+    </div>
   ) : (
     <div className="flex  py-4 flex-col justify-center items-center my-4">
       <h3 className="mb-3 send_code text-center">
